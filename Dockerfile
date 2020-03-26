@@ -9,39 +9,32 @@ ENV MYSQL_PORT=3306
 ENV TZ="Europe/Rome"
 
 ENV AMAVISD_DB_USER="amavisd"
-ENV AMAVISD_DB_PASSWD=""
-ENV AMAVISD_DB_PASSWD_FILE="/run/secrets/iredmail_amavisd_mysql_password"
+ENV AMAVISD_DB_PASSWD="/run/secrets/iredmail_amavisd_mysql_password"
 
 ENV IREDADMIN_DB_USER="iredadmin"
-ENV IREDADMIN_DB_PASSWD=""
-ENV IREDADMIN_DB_PASSWD_FILE="/run/secrets/iredmail_iredadmin_mysql_password"
+ENV IREDADMIN_DB_PASSWD="/run/secrets/iredmail_iredadmin_mysql_password"
 
 ENV IREDAPD_DB_USER="iredapd"
-ENV IREDAPD_DB_PASSWD=""
-ENV IREDAPD_DB_PASSWD_FILE="/run/secrets/iredmail_iredapd_mysql_password"
+ENV IREDAPD_DB_PASSWD="/run/secrets/iredmail_iredapd_mysql_password"
 
 ENV ROUNDCUBE_DB_USER="roundcubemail"
-ENV ROUNDCUBE_DB_PASSWD=""
-ENV ROUNDCUBE_DB_PASSWD_FILE="/run/secrets/iredmail_roundcube_mysql_password"
+ENV ROUNDCUBE_DB_PASSWD="/run/secrets/iredmail_roundcube_mysql_password"
 
 ENV SOGO_DB_USER="sogo"
-ENV SOGO_DB_PASSWD=""
-ENV SOGO_DB_PASSWD_FILE="/run/secrets/iredmail_sogo_mysql_password"
+ENV SOGO_DB_PASSWD="/run/secrets/iredmail_sogo_mysql_password"
 
 ENV VMAIL_DB_USER="vmail"
-ENV VMAIL_DB_PASSWD=""
-ENV VMAIL_DB_PASSWD_FILE="/run/secrets/iredmail_vmail_mysql_password"
+ENV VMAIL_DB_PASSWD="/run/secrets/iredmail_vmail_mysql_password"
 
 ENV VMAILADMIN_DB_USER="vmailadmin"
-ENV VMAILADMIN_DB_PASSWD=""
-ENV VMAILADMIN_DB_PASSWD_FILE="/run/secrets/iredmail_vmailadmin_mysql_password"
+ENV VMAILADMIN_DB_PASSWD="/run/secrets/iredmail_vmailadmin_mysql_password"
 
 VOLUME /iredmail
 
 ADD ./etc /iredmail/etc/
 
 ARG IREDMAIL_VERSION=1.1
-ARG FQDN="mail-server.frijofabio.com"
+ARG FQDN="mail.example.com"
 ARG INSTALLER=/tmp/iRedMail-${IREDMAIL_VERSION}/iRedMail/iRedMail.sh
 
 RUN wget -O /tmp/iRedMail.tgz https://codeload.github.com/iredmail/iRedMail/tar.gz/"${IREDMAIL_VERSION}"
