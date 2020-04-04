@@ -1,0 +1,45 @@
+================================================================================
+
+         This file contains all Development users and passwords
+
+================================================================================
+
+---------
+- MySQL -
+---------
+
+# Administrator
+user: root
+password: root
+
+# iRedMail - amavisd
+user: amavisd
+password: amavisd
+
+# iRedMail - iredadmin
+user: iredadmin
+password: iredadmin
+
+# iRedMail - iredapd
+user: iredapd
+password: iredapd
+
+# iRedMail - vmail
+user: vmail
+password: vmail
+
+# iRedMail - vmailadmin
+user: vmailadmin
+password: vmailadmin
+
+# iRedMail - roundcubemail
+user: roundcube
+password: roundcube
+
+---------------
+- Mail Server -
+---------------
+
+# Administrator
+user: postmaster@wolfetti.example
+password: postmaster
