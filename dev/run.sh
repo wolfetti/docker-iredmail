@@ -6,6 +6,7 @@ if [[ "$(docker ps -a | grep 'wolfetti-iredmail-dev')" != "" ]]; then
 fi
 
 docker run -d --name wolfetti-iredmail-dev \
+  --network="wolfetti-iredmail-network-dev" \
   -v wolfetti-iredmail-dev_data:/iredmail \
   -e HOSTNAME="mail" \
   -e DOMAIN="wolfetti.example" \

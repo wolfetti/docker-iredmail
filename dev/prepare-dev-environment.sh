@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Create docker network
-docker network create --driver bridge wolfetti-iredmail-dev-network
+docker network create --driver bridge wolfetti-iredmail-network-dev
 
 # Create mysql container
-docker run -d --name wolfetti-iredmail-dev-mysql \
-  -v wolfetti-iredmail-dev-mysql_data:/var/lib/mysql \
-  --network="wolfetti-iredmail-dev-network" \
+docker run -d --name wolfetti-iredmail-mysql-dev \
+  -v wolfetti-iredmail-mysql-dev_data:/var/lib/mysql \
+  --network="wolfetti-iredmail-network-dev" \
   -p 33006:3306 \
   -e MYSQL_ROOT_PASSWORD="root" \
   -e MYSQL_ROOT_HOST="%" \
@@ -16,7 +16,7 @@ docker run -d --name wolfetti-iredmail-dev-mysql \
 echo "Waiting for MySQL server up and running...."
 while true; do
   sleep 2
-  ID=$(docker ps -qf "name=wolfetti-iredmail-dev-mysql")
+  ID=$(docker ps -qf "name=wolfetti-iredmail-mysql-dev")
   if [[ "" != "$ID" ]]; then
     while [[ "$(docker exec -i $ID mysqladmin -uhealthchecker -phealthcheckpass ping 2> /dev/null)" != "mysqld is alive" ]]; do
       sleep 1
