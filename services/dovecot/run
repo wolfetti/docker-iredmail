@@ -1,0 +1,22 @@
+#!/bin/sh
+. /opt/iredmail/docker-env
+sed -i "s/DOMAIN/${DOMAIN}/g" /etc/dovecot/dovecot.conf
+sed -i "s/TEMP_VMAIL_DB_BIND_PASSWD/$VMAIL_DB_BIND_PASSWD/" \
+  /etc/dovecot/dovecot-mysql.conf
+sed -i "s/TEMP_VMAIL_DB_ADMIN_PASSWD/$VMAIL_DB_ADMIN_PASSWD/" \
+  /etc/dovecot/dovecot-share-folder.conf \
+  /etc/dovecot/dovecot-used-quota.conf \
+  /etc/dovecot/dovecot-last-login.conf
+sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" \
+  /etc/dovecot/dovecot-mysql.conf \
+  /etc/dovecot/dovecot-share-folder.conf \
+  /etc/dovecot/dovecot-used-quota.conf \
+  /etc/dovecot/dovecot-last-login.conf
+sed -i "s/TEMP_MYSQL_SERVER_PORT/$MYSQL_PORT/" \
+  /etc/dovecot/dovecot-mysql.conf \
+  /etc/dovecot/dovecot-share-folder.conf \
+  /etc/dovecot/dovecot-used-quota.conf \
+  /etc/dovecot/dovecot-last-login.conf
+
+echo "Starting dovecot..."
+exec /usr/sbin/dovecot -F -c /etc/dovecot/dovecot.conf

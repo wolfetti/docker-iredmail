@@ -1,0 +1,17 @@
+#!/bin/sh
+
+### Wait until postfix is started
+echo "Starting mlmmjadmin..."
+. /opt/iredmail/docker-env
+sed -i "s/TEMP_VMAIL_DB_ADMIN_PASSWD/${VMAIL_DB_ADMIN_PASSWD}/g" /opt/mlmmjadmin/settings.py
+sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/${MYSQL_HOST}/g" /opt/mlmmjadmin/settings.py
+sed -i "s/TEMP_MYSQL_SERVER_PORT/${MYSQL_PORT}/g" /opt/mlmmjadmin/settings.py
+
+RS=$(echo $RANDOM | md5sum | awk '{print $1}')
+sed -i "s/^api_auth_tokens.*$/api_auth_tokens = ['$RS']/g"  /opt/mlmmjadmin/settings.py
+sed -i "s/^backend_api.*$/backend_api = 'bk_iredmail_sql'/g"  /opt/mlmmjadmin/settings.py
+
+/bin/mkdir -p /var/run/mlmmjadmin
+chown mlmmj:mlmmj /var/run/mlmmjadmin
+/bin/chmod 0755 /var/run/mlmmjadmin
+exec /usr/sbin/uwsgi --ini /opt/mlmmjadmin/rc_scripts/uwsgi/debian.ini --pidfile /var/run/mlmmjadmin/mlmmjadmin.pid
