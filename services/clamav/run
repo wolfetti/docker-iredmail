@@ -6,5 +6,4 @@ if [ ! -d /var/run/clamav ]; then
   chmod 755 /var/run/clamav
 fi
 
-/usr/bin/freshclam
 exec /usr/sbin/clamd -F
