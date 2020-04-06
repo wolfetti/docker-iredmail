@@ -2,7 +2,7 @@ FROM debian:buster-slim
 
 # Initial required packages
 RUN apt-get update && apt-get -y --no-install-recommends install \
-  memcached rsyslog s6 wget procps ca-certificates
+  memcached s6 wget procps ca-certificates rsyslog
 
 ENV DOMAIN=DOMAIN
 ENV HOSTNAME=HOSTNAME
@@ -25,8 +25,6 @@ VOLUME /var/vmail
 RUN wget https://github.com/iredmail/iRedMail/archive/1.1.tar.gz -O /tmp/iRedMail-1.1.tar.gz \
   && tar -xzvf /tmp/iRedMail-1.1.tar.gz -C /tmp/ \
   && sed -i "s/mariadb-server//" /tmp/iRedMail-1.1/functions/packages.sh \
-  && sed -i "s/check_hostname()/check_hostname_disabled()/" /tmp/iRedMail-1.1/conf/core \
-  && echo -e "\ncheck_hostname()\n{\necho \"[ INFO ] Hostname verification disabled.\"\n}\n\n" >> /tmp/iRedMail-1.1/conf/core \
   && chmod +x /tmp/iRedMail-1.1/iRedMail.sh
 
 # iRedMail installer configuration

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Update RCB password
 . /opt/iredmail/docker-env
@@ -12,7 +12,7 @@ sed -i "s/99999/$MYSQL_PORT/" \
     /opt/www/roundcubemail/config/config.inc.php \
     /opt/www/roundcubemail/plugins/password/config.inc.php
 
-# start php fpm
+# Check symlink and pid/socket folder
 if [ ! -L /usr/sbin/php-fpm ]; then
   ln -s /usr/sbin/php-fpm7.3 /usr/sbin/php-fpm
 fi
@@ -21,4 +21,14 @@ if [ ! -d /run/php ]; then
   mkdir -p /run/php
 fi
 
+# Fix log to docker logs
+if [ ! -d /var/log/php-fpm ]; then
+  mkdir -p /var/log/php-fpm
+  chown www-data:www-data /var/log/php-fpm
+  chmod 755 /var/log/php-fpm
+fi
+
+ln -sf /proc/self/fd/2 /var/log/php-fpm/php-fpm.log
+
+# Execute process
 exec /usr/sbin/php-fpm --nodaemonize

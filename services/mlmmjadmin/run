@@ -15,4 +15,13 @@ if [ ! -d /var/run/mlmmjadmin ]; then
   chmod 0755 /var/run/mlmmjadmin
 fi
 
+# Fix log to docker logs
+if [ ! -d /var/log/mlmmjadmin ]; then
+  mkdir -p /var/log/mlmmjadmin
+  chown mlmmj:mlmmj /var/log/mlmmjadmin
+  chmod 755 /var/log/mlmmjadmin
+fi
+
+ln -sf /proc/self/fd/2 /var/log/mlmmjadmin/mlmmjadmin.log
+
 exec /usr/bin/uwsgi --ini /opt/mlmmjadmin/rc_scripts/uwsgi/debian.ini --pidfile /var/run/mlmmjadmin/mlmmjadmin.pid

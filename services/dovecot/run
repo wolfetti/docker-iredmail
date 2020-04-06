@@ -1,5 +1,6 @@
 #!/bin/sh
 . /opt/iredmail/docker-env
+
 sed -i "s/DOMAIN/${DOMAIN}/g" /etc/dovecot/dovecot.conf
 sed -i "s/TEMP_VMAIL_DB_BIND_PASSWD/$VMAIL_DB_BIND_PASSWD/" \
   /etc/dovecot/dovecot-mysql.conf
@@ -18,5 +19,16 @@ sed -i "s/99999/$MYSQL_PORT/" \
   /etc/dovecot/dovecot-used-quota.conf \
   /etc/dovecot/dovecot-last-login.conf
 
-echo "Starting dovecot..."
+if [ ! -d /var/log/dovecot ]; then
+  mkdir -p /var/log/dovecot
+  chown dovecot:dovecot /var/log/dovecot
+  chmod 755 /var/log/dovecot
+fi
+
+ln -sf /proc/self/fd/2 /var/log/dovecot/dovecot.log
+ln -sf /proc/self/fd/2 /var/log/dovecot/lda.log
+ln -sf /proc/self/fd/2 /var/log/dovecot/imap.log
+ln -sf /proc/self/fd/2 /var/log/dovecot/pop3.log
+ln -sf /proc/self/fd/2 /var/log/dovecot/sieve.log
+
 exec /usr/sbin/dovecot -F -c /etc/dovecot/dovecot.conf
