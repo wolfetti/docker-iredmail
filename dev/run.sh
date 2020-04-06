@@ -10,7 +10,7 @@ docker run -d --name wolfetti-iredmail-dev \
   -v wolfetti-iredmail-dev_data:/iredmail \
   -e HOSTNAME="mail" \
   -e DOMAIN="wolfetti.example" \
-  -e MYSQL_HOST="wolfetti-iredmail-dev-mysql" \
+  -e MYSQL_HOST="wolfetti-iredmail-mysql-dev" \
   -e AMAVISD_DB_PASSWD="amavisd" \
   -e IREDADMIN_DB_PASSWD="iredadmin" \
   -e IREDAPD_DB_PASSWD="iredapd" \
