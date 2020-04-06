@@ -7,7 +7,7 @@ fi
 
 docker run -d --name wolfetti-iredmail-dev \
   --network="wolfetti-iredmail-network-dev" \
-  -v wolfetti-iredmail-dev_data:/iredmail \
+  -v wolfetti-iredmail-dev_data:/var/vmail \
   -e HOSTNAME="mail" \
   -e DOMAIN="wolfetti.example" \
   -e MYSQL_HOST="wolfetti-iredmail-mysql-dev" \
