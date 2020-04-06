@@ -12,7 +12,7 @@ sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" \
   /etc/dovecot/dovecot-share-folder.conf \
   /etc/dovecot/dovecot-used-quota.conf \
   /etc/dovecot/dovecot-last-login.conf
-sed -i "s/TEMP_MYSQL_SERVER_PORT/$MYSQL_PORT/" \
+sed -i "s/99999/$MYSQL_PORT/" \
   /etc/dovecot/dovecot-mysql.conf \
   /etc/dovecot/dovecot-share-folder.conf \
   /etc/dovecot/dovecot-used-quota.conf \

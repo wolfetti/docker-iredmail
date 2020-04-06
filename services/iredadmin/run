@@ -5,7 +5,7 @@ sed -i "s/TEMP_IREDADMIN_DB_PASSWD/$IREDADMIN_DB_PASSWD/" /opt/www/iredadmin/set
 sed -i "s/TEMP_IREDAPD_DB_PASSWD/$IREDAPD_DB_PASSWD/" /opt/www/iredadmin/settings.py
 sed -i "s/TEMP_VMAIL_DB_ADMIN_PASSWD/$VMAIL_DB_ADMIN_PASSWD/" /opt/www/iredadmin/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" /opt/www/iredadmin/settings.py
-sed -i "s/TEMP_MYSQL_SERVER_PORT/$MYSQL_PORT/" /opt/www/iredadmin/settings.py
+sed -i "s/99999/$MYSQL_PORT/" /opt/www/iredadmin/settings.py
 
 if [ ! -d /var/run/iredadmin ]; then
   mkdir /var/run/iredadmin

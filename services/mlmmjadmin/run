@@ -3,7 +3,7 @@
 . /opt/iredmail/docker-env
 sed -i "s/TEMP_VMAIL_DB_ADMIN_PASSWD/${VMAIL_DB_ADMIN_PASSWD}/g" /opt/mlmmjadmin/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/${MYSQL_HOST}/g" /opt/mlmmjadmin/settings.py
-sed -i "s/TEMP_MYSQL_SERVER_PORT/${MYSQL_PORT}/g" /opt/mlmmjadmin/settings.py
+sed -i "s/99999/${MYSQL_PORT}/g" /opt/mlmmjadmin/settings.py
 
 RS=$(echo $RANDOM | md5sum | awk '{print $1}')
 sed -i "s/^api_auth_tokens.*$/api_auth_tokens = ['$RS']/g"  /opt/mlmmjadmin/settings.py
