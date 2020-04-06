@@ -1,6 +1,7 @@
 #!/bin/sh
 
 . /opt/iredmail/docker-env
+
 sed -i "s/TEMP_VMAIL_DB_ADMIN_PASSWD/${VMAIL_DB_ADMIN_PASSWD}/g" /opt/mlmmjadmin/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/${MYSQL_HOST}/g" /opt/mlmmjadmin/settings.py
 sed -i "s/999999999/${MYSQL_PORT}/g" /opt/mlmmjadmin/settings.py
@@ -20,6 +21,18 @@ if [ ! -d /var/log/mlmmjadmin ]; then
   mkdir -p /var/log/mlmmjadmin
   chown mlmmj:mlmmj /var/log/mlmmjadmin
   chmod 755 /var/log/mlmmjadmin
+fi
+
+if [ ! -d /var/vmail/mlmmj ]; then
+  mkdir -p /var/vmail/mlmmj
+  chown mlmmj:mlmmj /var/vmail/mlmmj
+  chmod 700 /var/vmail/mlmmj
+fi
+
+if [ ! -d /var/vmail/mlmmj-archive ]; then
+  mkdir -p /var/vmail/mlmmj-archive
+  chown mlmmj:mlmmj /var/vmail/mlmmj-archive
+  chmod 700 /var/vmail/mlmmj-archive
 fi
 
 ln -sf /proc/self/fd/2 /var/log/mlmmjadmin/mlmmjadmin.log
