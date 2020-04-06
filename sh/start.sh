@@ -126,4 +126,9 @@ echo
 echo "========================================================================="
 echo "Starting services...."
 echo "========================================================================="
+chown vmail:vmail /var/vmail
+chmod 0755 /var/vmail
+mkdir /var/vmail/backup
+echo "#!/bin/sh" > /var/vmail/backup/mackup_mysql.sh
+echo "echo \"MySQL backup disabled.\"" >> /var/vmail/backup/mackup_mysql.sh
 exec /usr/bin/s6-svscan /services
