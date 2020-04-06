@@ -76,6 +76,8 @@ postmap /etc/postfix/mysql/catchall_maps.cf \
     /etc/postfix/mysql/virtual_mailbox_maps.cf \
     /etc/postfix/mysql/domain_alias_catchall_maps.cf
 
-ln -sf /proc/self/fd/2 /var/log/mail.log
+# Log to stdout
+echo "postlog   unix-dgram n  -       n       -       1       postlogd" >> /etc/postfix/master.cf
+echo "maillog_file = /dev/stdout" >> /etc/postfix/main.cf
 
 exec /usr/sbin/postfix start-fg
