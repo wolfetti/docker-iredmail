@@ -50,6 +50,9 @@ RUN apt-get -y install memcached
 # s6 services
 COPY ./services /services
 
+# Utility scripts
+ADD ./sh/generate_ssl_keys.sh /
+
 # Start entrypoint setup
 ADD ./sh/start.sh /
 RUN chmod +x /start.sh \

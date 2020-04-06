@@ -77,6 +77,34 @@ chmod 600 /opt/iredmail/docker-env
 # =============================
 
 # =============================
+# SSL Keys
+# =============================
+
+# Removing iRedMail generated certs
+if [ -f /etc/ssl/private/iRedMail.key ]; then
+  rm -f /etc/ssl/private/iRedMail.key
+fi
+if [ -f /etc/ssl/iRedMail.crt ]; then
+  rm -f /etc/ssl/iRedMail.crt
+fi
+
+# If the user doesn't provide certs,
+# we generate certs for $DOMAIN
+if [ ! -d /var/vmail/ssl/ ]; then
+  chmod +x /generate_ssl_keys.sh
+  /generate_ssl_keys.sh $HOSTNAME.$DOMAIN
+
+# Check if custom provided certificates exists and link to /etc/ssl
+elif [[ ! -f /var/vmail/ssl/iRedMail.key || ! -f /var/vmail/ssl/iRedMail.crt ]]; then
+  echo "Missing custom required certs in /var/vmail/ssl/";
+  exit 1
+else
+  ln -s /var/vmail/ssl/iRedMail.crt /etc/ssl/certs/iRedMail.crt
+  ln -s /var/vmail/ssl/iRedMail.key /etc/ssl/private/iRedMail.key
+fi
+# =============================
+
+# =============================
 # Service scripts permissions
 # =============================
 for d in $(/bin/ls /services); do
