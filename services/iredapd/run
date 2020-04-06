@@ -7,7 +7,6 @@ PIDFILE='/var/run/iredapd.pid'
 
 # Configure plugins
 if [ ! -z "${IREDAPD_PLUGINS}" ]; then
-  echo "Starting iredapd";
   sed -i "/^plugins /c plugins = $IREDAPD_PLUGINS" /opt/iredapd/settings.py;
 fi
 

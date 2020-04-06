@@ -1,7 +1,5 @@
 #!/bin/sh
 
-echo "Starting php-fpm..."
-
 # Update RCB password
 . /opt/iredmail/docker-env
 sed -i "s/TEMP_RCM_DB_PASSWD/$RCM_DB_PASSWD/" \

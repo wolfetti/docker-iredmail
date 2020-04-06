@@ -1,7 +1,5 @@
 #!/bin/sh
 
-### Wait until postfix is started
-echo "Starting mlmmjadmin..."
 . /opt/iredmail/docker-env
 sed -i "s/TEMP_VMAIL_DB_ADMIN_PASSWD/${VMAIL_DB_ADMIN_PASSWD}/g" /opt/mlmmjadmin/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/${MYSQL_HOST}/g" /opt/mlmmjadmin/settings.py

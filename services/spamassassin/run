@@ -1,6 +1,4 @@
 #!/bin/bash
-echo "Starting spamd..."
-
 PIDFILE=/var/run/spamd.pid
 SPAMDOPTIONS="--create-prefs --max-children 5 --helper-home-dir --syslog=stderr"
 

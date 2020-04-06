@@ -1,5 +1,4 @@
 #!/bin/sh
-echo "Starting amavisd..."
 
 #  Load configuration values
 . /opt/iredmail/docker-env
