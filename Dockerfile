@@ -1,7 +1,7 @@
 FROM debian:buster-slim
 
 # Initial required packages
-RUN apt-get update && apt-get -y install s6 wget procps
+RUN apt-get update && apt-get -y install memcached rsyslog s6 wget procps
 
 ENV DOMAIN=DOMAIN
 ENV HOSTNAME=HOSTNAME
@@ -43,9 +43,6 @@ RUN IREDMAIL_DEBUG='NO' \
    AUTO_CLEANUP_REPLACE_MYSQL_CONFIG=y \
    AUTO_CLEANUP_RESTART_POSTFIX=n \
    bash /tmp/iRedMail-1.1/iRedMail.sh
-
-# Install missing packages
-RUN apt-get -y install memcached rsyslog
 
 # s6 services
 COPY ./services /services
