@@ -1,5 +1,10 @@
 #!/bin/sh
 
-# Refresh ClamAV cvd files
-echo "Starting ClamAV..."
+if [ ! -d /var/run/clamav ]; then
+  mkdir -p /var/run/clamav
+  chown clamav:root /var/run/clamav
+  chmod 755 /var/run/clamav
+fi
+
+/usr/bin/freshclam
 exec /usr/sbin/clamd -F
