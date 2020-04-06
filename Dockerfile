@@ -1,7 +1,8 @@
 FROM debian:buster-slim
 
 # Initial required packages
-RUN apt-get update && apt-get -y install memcached rsyslog s6 wget procps
+RUN apt-get update && apt-get -y --no-install-recommends install \
+  memcached rsyslog s6 wget procps ca-certificates
 
 ENV DOMAIN=DOMAIN
 ENV HOSTNAME=HOSTNAME
