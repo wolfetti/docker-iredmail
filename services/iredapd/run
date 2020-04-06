@@ -25,7 +25,7 @@ check_status() {
 sed -i "s/TEMP_IREDAPD_DB_PASSWD/$IREDAPD_DB_PASSWD/" /opt/iredapd/settings.py
 sed -i "s/TEMP_VMAIL_DB_BIND_PASSWD/$VMAIL_DB_BIND_PASSWD/" /opt/iredapd/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" /opt/iredapd/settings.py
-sed -i "s/99999/$MYSQL_PORT/" /opt/iredapd/settings.py
+sed -i "s/999999999/$MYSQL_PORT/" /opt/iredapd/settings.py
 
 if [ -f ${PIDFILE} ]; then
   PID="$(cat ${PIDFILE})"

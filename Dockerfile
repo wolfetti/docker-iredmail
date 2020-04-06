@@ -9,7 +9,7 @@ ENV HOSTNAME=HOSTNAME
 
 # MySQL database
 ENV MYSQL_HOST=""
-ENV MYSQL_PORT=3306
+ENV MYSQL_PORT=""
 
 # Database passwords. If points to a file then is used it's content
 ENV AMAVISD_DB_PASSWD=""

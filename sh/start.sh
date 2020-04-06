@@ -42,20 +42,21 @@ if [[ "$GET_PASS_ERRORS" != "" ]]; then
   exit 1
 fi
 
-if [ -z $MYSQL_HOST ]; then
+if [[ "" == "$MYSQL_HOST" ]]; then
   echo "MySQL host name (or IP address) must be specified in environment variable MYSQL_HOST"
   exit 1
 fi
 
-if [ -z $MYSQL_PORT ]; then
+if [[ "" == "$MYSQL_PORT" ]]; then
+  echo "MySQL port will be setup to default: 3306"
   MYSQL_PORT=3306
 fi
 
-if [ -z $DOMAIN ]; then
+if [[ "" == "$DOMAIN" ]]; then
   DOMAIN=$(hostname -d)
 fi
 
-if [ -z $HOSTNAME ]; then
+if [[ "" == "$HOSTNAME" ]]; then
   HOSTNAME=$(hostname -s)
 fi
 
@@ -69,7 +70,7 @@ mkdir -p /opt/iredmail
 echo -e "HOSTNAME=\"$HOSTNAME\"" > /opt/iredmail/docker-env
 echo -e "DOMAIN=\"$DOMAIN\"" >> /opt/iredmail/docker-env
 echo -e "MYSQL_HOST=\"$MYSQL_HOST\"" >> /opt/iredmail/docker-env
-echo -e "MYSQL_PORT=\"$MYSQL_HOST\"" >> /opt/iredmail/docker-env
+echo -e "MYSQL_PORT=\"$MYSQL_PORT\"" >> /opt/iredmail/docker-env
 echo -e "AMAVISD_DB_PASSWD=\"$REAL_AMAVISD_DB_PASSWD\"" >> /opt/iredmail/docker-env
 echo -e "IREDADMIN_DB_PASSWD=\"$REAL_IREDADMIN_DB_PASSWD\"" >> /opt/iredmail/docker-env
 echo -e "IREDAPD_DB_PASSWD=\"$REAL_IREDAPD_DB_PASSWD\"" >> /opt/iredmail/docker-env
@@ -119,7 +120,7 @@ echo
 echo "========================================================================="
 echo "Generating first ClamAV database..."
 echo "========================================================================="
-/usr/bin/freshclam 2>/dev/null
+/usr/bin/freshclam
 
 echo
 echo "========================================================================="

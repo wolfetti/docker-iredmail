@@ -42,7 +42,7 @@ sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" \
     /etc/postfix/mysql/virtual_mailbox_domains.cf \
     /etc/postfix/mysql/virtual_mailbox_maps.cf \
     /etc/postfix/mysql/domain_alias_catchall_maps.cf
-sed -i "s/99999/$MYSQL_PORT/" \
+sed -i "s/999999999/$MYSQL_PORT/" \
     /etc/postfix/mysql/catchall_maps.cf \
     /etc/postfix/mysql/domain_alias_maps.cf \
     /etc/postfix/mysql/recipient_bcc_maps_domain.cf \
