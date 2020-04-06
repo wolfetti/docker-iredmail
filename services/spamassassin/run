@@ -1,11 +1,8 @@
 #!/bin/bash
+echo "Starting spamd..."
 
 PIDFILE=/var/run/spamd.pid
-
-# Load default variables
-if [ -e /etc/sysconfig/spamassassin ]; then
-  source /etc/sysconfig/spamassassin
-fi
+SPAMDOPTIONS="--create-prefs --max-children 5 --helper-home-dir"
 
 # Stop already running Spamasssin instance
 if [ -e $PIDFILE ]; then
@@ -15,6 +12,4 @@ if [ -e $PIDFILE ]; then
 fi
 
 # Start Spamassasin
-echo "Starting spamd..."
-/sbin/portrelease spamd
-/usr/bin/spamd --pidfile $PIDFILE $SPAMDOPTIONS
+/usr/sbin/spamd --pidfile $PIDFILE $SPAMDOPTIONS
