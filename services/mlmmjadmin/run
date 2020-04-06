@@ -9,7 +9,10 @@ RS=$(echo $RANDOM | md5sum | awk '{print $1}')
 sed -i "s/^api_auth_tokens.*$/api_auth_tokens = ['$RS']/g"  /opt/mlmmjadmin/settings.py
 sed -i "s/^backend_api.*$/backend_api = 'bk_iredmail_sql'/g"  /opt/mlmmjadmin/settings.py
 
-/bin/mkdir -p /var/run/mlmmjadmin
-chown mlmmj:mlmmj /var/run/mlmmjadmin
-/bin/chmod 0755 /var/run/mlmmjadmin
-exec /usr/sbin/uwsgi --ini /opt/mlmmjadmin/rc_scripts/uwsgi/debian.ini --pidfile /var/run/mlmmjadmin/mlmmjadmin.pid
+if [ ! -d /var/run/mlmmjadmin ]; then
+  mkdir -p /var/run/mlmmjadmin
+  chown mlmmj:mlmmj /var/run/mlmmjadmin
+  chmod 0755 /var/run/mlmmjadmin
+fi
+
+exec /usr/bin/uwsgi --ini /opt/mlmmjadmin/rc_scripts/uwsgi/debian.ini --pidfile /var/run/mlmmjadmin/mlmmjadmin.pid

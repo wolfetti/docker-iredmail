@@ -1,18 +1,17 @@
 #!/bin/sh
-
-# Update MySQL password
 . /opt/iredmail/docker-env
+
 sed -i "s/TEMP_IREDADMIN_DB_PASSWD/$IREDADMIN_DB_PASSWD/" /opt/www/iredadmin/settings.py
 sed -i "s/TEMP_IREDAPD_DB_PASSWD/$IREDAPD_DB_PASSWD/" /opt/www/iredadmin/settings.py
 sed -i "s/TEMP_VMAIL_DB_ADMIN_PASSWD/$VMAIL_DB_ADMIN_PASSWD/" /opt/www/iredadmin/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" /opt/www/iredadmin/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_PORT/$MYSQL_PORT/" /opt/www/iredadmin/settings.py
 
-# Starting procedure based on SystemD service:
-# /lib/systemd/system/iredadmin.service
-mkdir /var/run/iredadmin
-chown iredadmin:iredadmin /var/run/iredadmin
-chmod 0755 /var/run/iredadmin
+if [ ! -d /var/run/iredadmin ]; then
+  mkdir /var/run/iredadmin
+  chown iredadmin:iredadmin /var/run/iredadmin
+  chmod 0755 /var/run/iredadmin
+fi
 
 # start - listens on tcp/7791
-exec /usr/sbin/uwsgi --ini /opt/www/iredadmin/rc_scripts/uwsgi/rhel.ini --pidfile /var/run/iredadmin/iredadmin.pid
+exec /usr/bin/uwsgi --ini /opt/www/iredadmin/rc_scripts/uwsgi/debian.ini --pidfile /var/run/iredadmin/iredadmin.pid

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-# COnfigurations
+# Configurations
+. /opt/iredmail/docker-env
 PROG='iredapd'
 BINPATH='/opt/iredapd/iredapd.py'
 PIDFILE='/var/run/iredapd.pid'
@@ -21,25 +22,10 @@ check_status() {
     fi
 }
 
-# Update MySQL password
-. /opt/iredmail/docker-env
 sed -i "s/TEMP_IREDAPD_DB_PASSWD/$IREDAPD_DB_PASSWD/" /opt/iredapd/settings.py
 sed -i "s/TEMP_VMAIL_DB_BIND_PASSWD/$VMAIL_DB_BIND_PASSWD/" /opt/iredapd/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" /opt/iredapd/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_PORT/$MYSQL_PORT/" /opt/iredapd/settings.py
-
-trap_term_signal() {
-    echo "Stopping (from SIGTERM)"
-    kill -15 $pid
-    while cat /proc/"$pid"/status | grep State: | grep -q zombie; test $? -gt 0
-    do
-        sleep 1
-    done
-    exit 0
-}
-
-trap "trap_term_signal" TERM
-
 
 if [ -f ${PIDFILE} ]; then
   PID="$(cat ${PIDFILE})"
@@ -55,17 +41,4 @@ if [ -f ${PIDFILE} ]; then
 fi
 
 # Start iredapd
-python ${BINPATH}
-
-
-while [ ! -f /var/run/iredapd.pid ]
-do
-    sleep 1
-done
-
-pid=$(cat /var/run/iredapd.pid)
-
-while kill -0 $pid 2>/dev/null
-do
-    sleep 1
-done
+python ${BINPATH} --foreground
