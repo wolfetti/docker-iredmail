@@ -17,4 +17,12 @@ docker run -d --name wolfetti-iredmail-dev \
   -e ROUNDCUBE_DB_PASSWD="roundcube" \
   -e VMAIL_DB_PASSWD="vmail" \
   -e VMAIL_ADMIN_DB_PASSWD="vmailadmin" \
+  -p 33080:80 \
+  -p 33443:443 \
+  -p 33025:25 \
+  -p 33587:587 \
+  -p 33110:110 \
+  -p 33143:143 \
+  -p 33993:993 \
+  -p 33995:995 \
   wolfetti/iredmail
