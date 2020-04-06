@@ -2,4 +2,4 @@
 
 # Refresh ClamAV cvd files
 echo "Starting ClamAV..."
-exec /usr/sbin/clamd -c /etc/clamd.d/amavisd.conf -F
+exec /usr/sbin/clamd -F
