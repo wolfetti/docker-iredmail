@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Start syslog daemon
+if [ ! -f /etc/rsyslog.d/listen.conf ]; then
+  if [ ! -d /etc/rsyslog.d ]; then
+    mkdir -p /etc/rsyslog.d
+  fi
+
+  echo "\$SystemLogSocketName /var/run/rsyslogd.sock" > /etc/rsyslog.d/listen.conf
+fi
+
+exec /usr/sbin/rsyslogd -n -iNONE
