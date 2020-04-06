@@ -2,7 +2,7 @@
 echo "Starting spamd..."
 
 PIDFILE=/var/run/spamd.pid
-SPAMDOPTIONS="--create-prefs --max-children 5 --helper-home-dir"
+SPAMDOPTIONS="--create-prefs --max-children 5 --helper-home-dir --syslog=stderr"
 
 # Stop already running Spamasssin instance
 if [ -e $PIDFILE ]; then
