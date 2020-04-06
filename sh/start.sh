@@ -59,6 +59,7 @@ if [ -z $HOSTNAME ]; then
   HOSTNAME=$(hostname -s)
 fi
 
+echo "$HOSTNAME.$DOMAIN" > /etc/mailname
 # =============================
 
 # =============================
