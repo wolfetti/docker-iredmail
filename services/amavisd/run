@@ -3,28 +3,22 @@ echo "Starting amavisd..."
 
 #  Load configuration values
 . /opt/iredmail/docker-env
-DOMAIN=$(hostname -d)
-HOSTNAME=$(hostname -s)
 
-sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" /opt/iredapd/settings.py \
-    /etc/amavisd/amavisd.conf \
-    /opt/www/iredadmin/settings.py
-sed -i "s/TEMP_MYSQL_SERVER_PORT/$MYSQL_PORT/" /opt/iredapd/settings.py \
-    /etc/amavisd/amavisd.conf \
-    /opt/www/iredadmin/settings.py
-sed -i "s/TEMP_AMAVISD_DB_PASSWD/$AMAVISD_DB_PASSWD/" /opt/iredapd/settings.py \
-    /etc/amavisd/amavisd.conf \
-    /opt/www/iredadmin/settings.py
-sed -i "s/HOSTNAME/${HOSTNAME}/g" /etc/amavisd/amavisd.conf
-sed -i "s/DOMAIN/${DOMAIN}/g" /etc/amavisd/amavisd.conf
+find /etc/amavis/conf.d -type f -exec sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" {} \;
+sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" /opt/iredapd/settings.py /opt/www/iredadmin/settings.py
+find /etc/amavis/conf.d -type f -exec sed -i "s/TEMP_MYSQL_SERVER_PORT/$MYSQL_PORT/" {} \;
+sed -i "s/TEMP_MYSQL_SERVER_PORT/$MYSQL_PORT/" /opt/iredapd/settings.py /opt/www/iredadmin/settings.py
+find /etc/amavis/conf.d -type f -exec sed -i "s/TEMP_AMAVISD_DB_PASSWD/$AMAVISD_DB_PASSWD/" {} \;
+sed -i "s/TEMP_AMAVISD_DB_PASSWD/$AMAVISD_DB_PASSWD/" /opt/iredapd/settings.py /opt/www/iredadmin/settings.py
+find /etc/amavis/conf.d -type f -exec sed -i "s/HOSTNAME/${HOSTNAME}/g" {} \;
+find /etc/amavis/conf.d -type f -exec sed -i "s/DOMAIN/${DOMAIN}/g" {} \;
 
 # If the rsa key is missing, generate it
 if [ ! -e /var/lib/dkim/${DOMAIN}.pem ]; then
-    logger DEBUG generating DKIM
-    amavisd genrsa /var/lib/dkim/${DOMAIN}.pem 2048
+    echo "Generating DKIM..."
+    amavisd-new genrsa /var/lib/dkim/${DOMAIN}.pem 2048
     chown amavis:amavis /var/lib/dkim/${DOMAIN}.pem
     chmod 0400 /var/lib/dkim/${DOMAIN}.pem
 fi
 
-logger DEBUG Starting amavisd
-exec /usr/sbin/amavisd -c /etc/amavisd/amavisd.conf foreground
+exec /usr/sbin/amavisd-new foreground
