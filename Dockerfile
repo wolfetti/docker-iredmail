@@ -44,6 +44,9 @@ RUN IREDMAIL_DEBUG='NO' \
    AUTO_CLEANUP_RESTART_POSTFIX=n \
    bash /tmp/iRedMail-1.1/iRedMail.sh
 
+# Install memcached
+RUN apt-get -y install memcached
+
 # s6 services
 COPY ./services /services
 
