@@ -6,4 +6,10 @@ if [ ! -d /var/run/clamav ]; then
   chmod 755 /var/run/clamav
 fi
 
+if [ ! -f /etc/cron.daily/freshclam ]; then
+  echo "#!/bin/sh" >> /etc/cron.daily/freshclam
+  echo "test -e /usr/bin/freshclam && /usr/bin/freshclam" >> /etc/cron.daily/freshclam
+  chmod 755 /etc/cron.daily/freshclam
+fi
+
 exec /usr/sbin/clamd -F

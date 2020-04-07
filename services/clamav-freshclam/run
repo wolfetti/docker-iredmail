@@ -1,4 +1,0 @@
-#!/bin/sh
-sleep 6h
-echo "Checking for ClamAV database updates"
-/usr/bin/freshclam
