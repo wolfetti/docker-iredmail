@@ -58,9 +58,9 @@ TLS_HOSTNAME="${HOSTNAME}"
 TLS_ADMIN="root@${HOSTNAME}"
 
 # Do not edit below lines.
-ROOTDIR="/etc/ssl"
-SSL_CERT_FILE="${ROOTDIR}/certs/iRedMail.crt"
-SSL_KEY_FILE="${ROOTDIR}/private/iRedMail.key"
+ROOTDIR="/var/vmail/ssl"
+SSL_CERT_FILE="${ROOTDIR}/iRedMail.crt"
+SSL_KEY_FILE="${ROOTDIR}/iRedMail.key"
 
 # Create SSL certs/private files.
 generate_ssl_keys()

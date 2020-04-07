@@ -95,17 +95,20 @@ fi
 # If the user doesn't provide certs,
 # we generate certs for $DOMAIN
 if [ ! -d /var/vmail/ssl/ ]; then
+  mkdir /var/vmail/ssl
   chmod +x /generate_ssl_keys.sh
   /generate_ssl_keys.sh $HOSTNAME.$DOMAIN
+fi
 
 # Check if custom provided certificates exists and link to /etc/ssl
-elif [[ ! -f /var/vmail/ssl/iRedMail.key || ! -f /var/vmail/ssl/iRedMail.crt ]]; then
+if [[ ! -f /var/vmail/ssl/iRedMail.key || ! -f /var/vmail/ssl/iRedMail.crt ]]; then
   echo "Missing custom required certs in /var/vmail/ssl/";
   exit 1
-else
-  ln -s /var/vmail/ssl/iRedMail.crt /etc/ssl/certs/iRedMail.crt
-  ln -s /var/vmail/ssl/iRedMail.key /etc/ssl/private/iRedMail.key
 fi
+
+# Create symlink to iRedMail configured certificates
+ln -sf /var/vmail/ssl/iRedMail.crt /etc/ssl/certs/iRedMail.crt
+ln -sf /var/vmail/ssl/iRedMail.key /etc/ssl/private/iRedMail.key
 # =============================
 
 # =============================
@@ -115,6 +118,13 @@ for d in $(/bin/ls /services); do
   chmod +x /services/$d/*
 done
 # =============================
+
+# ==================================
+# Volume folders/files initial setup
+# ==================================
+chown vmail:vmail /var/vmail
+chmod 0755 /var/vmail
+# ==================================
 
 echo
 echo "========================================================================="
@@ -126,9 +136,4 @@ echo
 echo "========================================================================="
 echo "Starting services...."
 echo "========================================================================="
-chown vmail:vmail /var/vmail
-chmod 0755 /var/vmail
-mkdir /var/vmail/backup
-echo "#!/bin/sh" > /var/vmail/backup/mackup_mysql.sh
-echo "echo \"MySQL backup disabled.\"" >> /var/vmail/backup/mackup_mysql.sh
 exec /usr/bin/s6-svscan /services
