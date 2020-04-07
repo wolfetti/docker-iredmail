@@ -2,6 +2,13 @@
 
 #  Load configuration values
 . /opt/iredmail/docker-env
+PIDFILE="/var/run/amavis/amavisd.pid"
+
+if [ -e $PIDFILE ]; then
+    if [ -e "/proc/$(cat $PIDFILE)/status" ]; then
+        kill $(cat $PIDFILE)
+    fi
+fi
 
 find /etc/amavis/conf.d -type f -exec sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" {} \;
 sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" /opt/iredapd/settings.py /opt/www/iredadmin/settings.py
