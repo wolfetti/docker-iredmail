@@ -85,11 +85,11 @@ chmod 600 /opt/iredmail/docker-env
 # =============================
 
 # Removing iRedMail generated certs
-if [ -f /etc/ssl/private/iRedMail.key ]; then
+if [ ! -L /etc/ssl/private/iRedMail.key ]; then
   rm -f /etc/ssl/private/iRedMail.key
 fi
-if [ -f /etc/ssl/iRedMail.crt ]; then
-  rm -f /etc/ssl/iRedMail.crt
+if [ ! -L /etc/ssl/certs/iRedMail.crt ]; then
+  rm -f /etc/ssl/certs/iRedMail.crt
 fi
 
 # If the user doesn't provide certs,
