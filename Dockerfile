@@ -43,6 +43,9 @@ RUN IREDMAIL_DEBUG='NO' \
    AUTO_CLEANUP_RESTART_POSTFIX=n \
    CHECK_NEW_IREDMAIL='NO' \
    bash /tmp/iRedMail-1.1/iRedMail.sh
+   
+# Removing logwatch
+RUN apt-get -y remove logwatch && apt-get -y autoremove
 
 # s6 services
 COPY ./services /services
