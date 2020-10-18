@@ -1,2 +1,0 @@
-#!/bin/bash
-exec memcached -u memcache -p 11211 -l 127.0.0.1  
