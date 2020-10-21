@@ -21,7 +21,7 @@ while true; do
     while [[ "$(docker exec -i $ID mysqladmin -uhealthchecker -phealthcheckpass ping 2> /dev/null)" != "mysqld is alive" ]]; do
       sleep 1
     done
-    for file in $(/bin/ls ./mysql); do
+    for file in $(/bin/ls ./develop/mysql); do
       echo "Installing $file..."
       cat ./develop/mysql/$file | docker exec -i $ID \
         mysql -uroot -proot \
