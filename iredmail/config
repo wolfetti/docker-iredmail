@@ -3,7 +3,6 @@
 #
 # Installer configuration
 #
-export CHECK_NEW_IREDMAIL='NO'
 export WEB_SERVER='NGINX'
 export STORAGE_BASE_DIR='/var/vmail'
 export USE_IREDADMIN='YES'
