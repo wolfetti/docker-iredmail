@@ -23,7 +23,7 @@ while true; do
     done
     for file in $(/bin/ls ./mysql); do
       echo "Installing $file..."
-      cat ./mysql/$file | docker exec -i $ID \
+      cat ./develop/mysql/$file | docker exec -i $ID \
         mysql -uroot -proot \
         2>&1 | grep -v "\[Warning\]"
       sleep 2
