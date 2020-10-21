@@ -70,6 +70,9 @@ RUN chmod +x /start.sh \
   && rm -rf /tmp/iRedMail* \
   && rm -rf /var/lib/apt/lists/*
 
+# DEV env vars
+ENV DEV_SKIP_UPDATE_CLAM_DB_ON_STARTUP="NO"
+
 # Starting mechanism
 ENTRYPOINT ["/start.sh"]
 CMD []

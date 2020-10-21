@@ -130,7 +130,11 @@ echo
 echo "========================================================================="
 echo "Generating first ClamAV database..."
 echo "========================================================================="
-/usr/bin/freshclam
+if [[ "YES" != "$DEV_SKIP_UPDATE_CLAM_DB_ON_STARTUP" ]]; then
+  /usr/bin/freshclam
+else 
+  echo "ClamAV database generation skipped."
+fi
 
 echo
 echo "========================================================================="
