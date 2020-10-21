@@ -2,6 +2,7 @@
 . /opt/iredmail/docker-env
 
 sed -i "s/TEMP_IREDADMIN_DB_PASSWD/$IREDADMIN_DB_PASSWD/" /opt/www/iredadmin/settings.py
+sed -i "s/TEMP_AMAVISD_DB_PASSWD/$AMAVISD_DB_PASSWD/" /opt/www/iredadmin/settings.py
 sed -i "s/TEMP_IREDAPD_DB_PASSWD/$IREDAPD_DB_PASSWD/" /opt/www/iredadmin/settings.py
 sed -i "s/TEMP_VMAIL_DB_ADMIN_PASSWD/$VMAIL_DB_ADMIN_PASSWD/" /opt/www/iredadmin/settings.py
 sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" /opt/www/iredadmin/settings.py

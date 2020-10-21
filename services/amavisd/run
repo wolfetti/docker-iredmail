@@ -11,11 +11,8 @@ if [ -e $PIDFILE ]; then
 fi
 
 find /etc/amavis/conf.d -type f -exec sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" {} \;
-sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" /opt/iredapd/settings.py /opt/www/iredadmin/settings.py
 find /etc/amavis/conf.d -type f -exec sed -i "s/999999999/$MYSQL_PORT/" {} \;
-sed -i "s/999999999/$MYSQL_PORT/" /opt/iredapd/settings.py /opt/www/iredadmin/settings.py
 find /etc/amavis/conf.d -type f -exec sed -i "s/TEMP_AMAVISD_DB_PASSWD/$AMAVISD_DB_PASSWD/" {} \;
-sed -i "s/TEMP_AMAVISD_DB_PASSWD/$AMAVISD_DB_PASSWD/" /opt/iredapd/settings.py /opt/www/iredadmin/settings.py
 find /etc/amavis/conf.d -type f -exec sed -i "s/HOSTNAME/${HOSTNAME}/g" {} \;
 find /etc/amavis/conf.d -type f -exec sed -i "s/DOMAIN/${DOMAIN}/g" {} \;
 
