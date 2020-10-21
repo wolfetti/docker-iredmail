@@ -22,6 +22,7 @@ if [ ! -e /var/lib/dkim/${DOMAIN}.pem ]; then
     if [ ! -d /var/vmail/dkim ]; then
         mkdir -p /var/vmail/dkim
         chmod 755 /var/vmail/dkim
+        chown amavis:amavis /var/vmail/dkim
     fi
 
     amavisd-new genrsa /var/vmail/dkim/${DOMAIN}.pem 2048
