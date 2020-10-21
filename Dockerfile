@@ -47,6 +47,16 @@ RUN IREDMAIL_DEBUG='NO' \
 # Removing logwatch
 RUN apt-get -y remove logwatch && apt-get -y autoremove
 
+# Installing roundcubemail extra plugins
+RUN wget -O - https://getcomposer.org/installer | php \
+  && mv composer.phar /usr/bin/composer \
+  && cd /opt/www/roundcubemail \
+  && apt-get -y install php-ldap \
+  && /usr/bin/composer require --update-no-dev \
+    "roundcube/carddav:*"  \
+  && echo "array_push(\$config['plugins'], 'carddav');" \ 
+     >> /opt/www/roundcubemail/config/config.inc.php
+
 # s6 services
 COPY ./services /services
 
