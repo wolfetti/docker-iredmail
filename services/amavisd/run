@@ -17,7 +17,7 @@ find /etc/amavis/conf.d -type f -exec sed -i "s/HOSTNAME/${HOSTNAME}/g" {} \;
 find /etc/amavis/conf.d -type f -exec sed -i "s/DOMAIN/${DOMAIN}/g" {} \;
 
 # If the rsa key is missing, generate it
-if [ ! -e /var/vmail/dkim/${DOMAIN}.pem ]; then
+if [ ! -e /var/lib/dkim/${DOMAIN}.pem ]; then
     echo "Generating DKIM..."
     if [ ! -d /var/vmail/dkim ]; then
         mkdir -p /var/vmail/dkim
@@ -31,12 +31,12 @@ fi
 
 # Creating symlink to RSA key
 if [ ! -L /var/lib/dkim ]; then
-    if [ -d /var/vmail/dkim ]; then
-        mv /var/vmail/dkim/* /var/vmail/dkim/
-        rm -r /var/vmail/dkim
+    if [ -d /var/lib/dkim ]; then
+        mv /var/lib/dkim/* /var/vmail/dkim/
+        rm -r /var/lib/dkim
     fi
 
-    ln -s /var/vmail/dkim /var/lib/dkim
+    ln -s /var/vmail/dkim /var/lib/
 fi
 
 exec /usr/sbin/amavisd-new foreground
