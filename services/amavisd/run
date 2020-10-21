@@ -1,7 +1,4 @@
 #!/bin/sh
-
-#  Load configuration values
-. /opt/iredmail/docker-env
 PIDFILE="/var/run/amavis/amavisd.pid"
 
 if [ -e $PIDFILE ]; then
@@ -10,27 +7,26 @@ if [ -e $PIDFILE ]; then
     fi
 fi
 
+#  Load configuration values
+. /opt/iredmail/docker-env
+
+# Set configuration values
 find /etc/amavis/conf.d -type f -exec sed -i "s/TEMP_MYSQL_SERVER_ADDRESS/$MYSQL_HOST/" {} \;
 find /etc/amavis/conf.d -type f -exec sed -i "s/999999999/$MYSQL_PORT/" {} \;
 find /etc/amavis/conf.d -type f -exec sed -i "s/TEMP_AMAVISD_DB_PASSWD/$AMAVISD_DB_PASSWD/" {} \;
 find /etc/amavis/conf.d -type f -exec sed -i "s/HOSTNAME/${HOSTNAME}/g" {} \;
 find /etc/amavis/conf.d -type f -exec sed -i "s/DOMAIN/${DOMAIN}/g" {} \;
 
-# If the rsa key is missing, generate it
-if [ ! -e /var/lib/dkim/${DOMAIN}.pem ]; then
-    echo "Generating DKIM..."
-    if [ ! -d /var/vmail/dkim ]; then
-        mkdir -p /var/vmail/dkim
-        chmod 755 /var/vmail/dkim
-        chown amavis:amavis /var/vmail/dkim
-    fi
-
-    amavisd-new genrsa /var/vmail/dkim/${DOMAIN}.pem 2048
-    chown amavis:amavis /var/vmail/dkim/${DOMAIN}.pem
-    chmod 0400 /var/vmail/dkim/${DOMAIN}.pem
+# Check user dkim folder
+if [ ! -d /var/vmail/dkim ]; then
+    mkdir -p /var/vmail/dkim
 fi
 
-# Creating symlink to RSA key
+# Fix dkim permissions
+chmod 755 /var/vmail/dkim
+chown amavis:amavis /var/vmail/dkim
+
+# Creating symlink to RSA keys folder
 if [ ! -L /var/lib/dkim ]; then
     if [ -d /var/lib/dkim ]; then
         mv /var/lib/dkim/* /var/vmail/dkim/
@@ -39,6 +35,15 @@ if [ ! -L /var/lib/dkim ]; then
     fi
 
     ln -s /var/vmail/dkim /var/lib/
+fi
+
+# If the rsa key is missing, generate it
+if [ ! -e /var/lib/dkim/${DOMAIN}.pem ]; then
+    echo "Generating DKIM..."
+
+    amavisd-new genrsa /var/vmail/dkim/${DOMAIN}.pem 2048
+    chown amavis:amavis /var/vmail/dkim/${DOMAIN}.pem
+    chmod 0400 /var/vmail/dkim/${DOMAIN}.pem
 fi
 
 exec /usr/sbin/amavisd-new foreground
