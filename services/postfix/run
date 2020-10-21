@@ -7,6 +7,20 @@ sed -i "s/HOSTNAME/${HOSTNAME}/g" /etc/postfix/main.cf
 sed -i "s/DOMAIN/${DOMAIN}/g" /etc/postfix/main.cf /etc/postfix/aliases
 newaliases
 
+# Fix for postfix warnings about file is not the same
+for file in localtime resolv.conf hosts; do
+    echo "Updating /var/spool/postfix/etc/$file..."
+    if [ ! -d /var/spool/postfix/etc ]; then
+        mkdir -p /var/spool/postfix/etc
+    fi
+
+    if [ -f /var/spool/postfix/etc/$file ]; then
+        rm /var/spool/postfix/etc/$file
+    fi
+
+    cp -av /etc/$file /var/spool/postfix/etc/$file
+done
+
 # Update MySQL password
 sed -i "s/TEMP_VMAIL_DB_BIND_PASSWD/$VMAIL_DB_BIND_PASSWD/" \
     /etc/postfix/mysql/catchall_maps.cf \
