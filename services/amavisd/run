@@ -34,6 +34,7 @@ fi
 if [ ! -L /var/lib/dkim ]; then
     if [ -d /var/lib/dkim ]; then
         mv /var/lib/dkim/* /var/vmail/dkim/
+        chown amavis:amavis /var/vmail/dkim/*
         rm -r /var/lib/dkim
     fi
 
